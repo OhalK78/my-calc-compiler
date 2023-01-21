@@ -15,7 +15,7 @@ static int term();
 static int
 expr()
 {
-	int d, assign;
+	int d, assign, t;
 
 	d = aexpr();
 	assign = lvalue;
@@ -24,7 +24,20 @@ expr()
 		switch (last_token)
 		{
 		case '>':
-			d = (d > aexpr());
+			t = aexpr();
+			if(last_token == '>'){	// >>
+				d = (d >> aexpr());
+			}else{					// >
+				d = (d > t);
+			}
+			break;
+		case '<':
+			t = aexpr();
+			if(last_token == '<'){	// <<
+				d = (d << aexpr());
+			}else{					// <
+				d = (d < t);
+			}
 			break;
 		case '=':
 			if (assign >= 0)
@@ -132,6 +145,10 @@ term()
 	/* -1や-a */
 	case '-':
 		d = -1*term();
+		return d;
+	case '>':
+		return d;
+	case '<':
 		return d;
 	default:
 		token();
