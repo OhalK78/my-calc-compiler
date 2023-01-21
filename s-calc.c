@@ -123,6 +123,10 @@ term()
 		}
 		token();
 		return d;
+	/* -1や-a */
+	case '-':
+		d = -1*term();
+		return d;
 	default:
 		token();
 		error("Unknown term");
