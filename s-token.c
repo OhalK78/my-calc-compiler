@@ -31,13 +31,39 @@ token()
         last_ptr = ptr;
         return last_token;
     }
-    if('0'<=c && c<='9') {     /* Decimal */
-        d = c-'0';
-        while((c= *ptr++)) {
-            if('0'<=c && c<='9') {
-                d = d*10 + (c - '0');
-            } else {
-                break;
+    if('0'<=c && c<='9') {     /* Decimal or Octal or Hexadecimal*/
+        if (c=='0' && *ptr){            /* Octal or Hexadecimal */
+            c = *ptr;
+            ptr++;
+            if('0'<=c && c<='7'){                 /* Octal */
+                d = 00 + c-'0';
+                while((c= *ptr++)){
+                    if('0'<=c && c<='7'){
+                        d = d*8 + (c-'0');
+                    }else{
+                        break;
+                    }
+                }
+            }else if(c=='x'){           /* Hexadecimal */
+                d = 0x0;
+                while((c= *ptr++)){
+                    if('0'<=c && c<='9'){
+                        d = d*16 + (c-'0');
+                    }else if('a'<=c && c<='f'){
+                        d = d*16 + (c-'a');
+                    }else{
+                        break;
+                    }
+                }
+            }
+        }else{                  /* Decimal */
+            d = c-'0';
+            while((c= *ptr++)) {
+                if('0'<=c && c<='9') {
+                    d = d*10 + (c - '0');
+                } else {
+                    break;
+                }
             }
         }
         if (c!=0) ptr--;
