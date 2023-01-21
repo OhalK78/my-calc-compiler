@@ -64,6 +64,9 @@ aexpr()
 		case '+':
 			d += mexpr();
 			break;
+		case '|':
+			d |= mexpr();
+			break;
 		default:
 			return d;
 		}
@@ -86,6 +89,9 @@ mexpr()
 			break;
 		case '/':
 			d /= term();
+			break;
+		case '&':
+			d &= term();
 			break;
 		default:
 			return d;
