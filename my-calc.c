@@ -49,6 +49,24 @@ expr()
 		case 'l':				// left shift (<<)
 			d = (d << aexpr());
 			break;
+		case 'e':				// == operation
+			d = (d == aexpr());
+			break;
+		case 'n':				// != operation
+			d = (d != aexpr());
+			break;
+		case '?':				// ternary operator 
+			if(d){
+				d = expr();
+				expr();
+				return d;
+			}else{
+				expr();
+				d = expr();
+				return d;
+			}
+		case ':':
+			return d;
 		default:
 			error("Bad expression");
 			return d;
@@ -138,14 +156,12 @@ term()
 		}
 		token();
 		return d;
-	/* -1や-a */
-	case '-':
+	case '-':		/* -1や-a */
 		d = -1*term();
 		return d;
-	//case '>':
-	//	return d;
-	//case '<':
-	//	return d;
+	case '!':
+		d = !(term());
+		return d;
 	default:
 		token();
 		error("Unknown term");
