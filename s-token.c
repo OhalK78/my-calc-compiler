@@ -95,7 +95,14 @@ token()
             ptr++; 
         }
         return last_token;
-    } else {
+    } else if (c=='!') {
+        last_token = c;
+        if(*ptr == '='){       // ! の後に=が来る→ !=が入力されている
+            last_token = 'n';
+            ptr++; 
+        }
+        return last_token;
+    }else {
         last_token = c;
         return last_token;
         return c;

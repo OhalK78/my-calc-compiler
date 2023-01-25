@@ -52,6 +52,9 @@ expr()
 		case 'e':				// == operation
 			d = (d==expr());
 			break;
+		case 'n':				// != operation
+			d = (d!=expr());
+			break;
 		default:
 			error("Bad expression");
 			return d;
@@ -141,14 +144,12 @@ term()
 		}
 		token();
 		return d;
-	/* -1や-a */
-	case '-':
+	case '-':		/* -1や-a */
 		d = -1*term();
 		return d;
-	//case '>':
-	//	return d;
-	//case '<':
-	//	return d;
+	case '!':
+		d = !(term());
+		return d;
 	default:
 		token();
 		error("Unknown term");
