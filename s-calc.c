@@ -55,6 +55,18 @@ expr()
 		case 'n':				// != operation
 			d = (d!=expr());
 			break;
+		case '?':				// ternary operator 
+			if(d){
+				d = expr();
+				expr();
+				return d;
+			}else{
+				expr();
+				d = expr();
+				return d;
+			}
+		case ':':
+			return d;
 		default:
 			error("Bad expression");
 			return d;
