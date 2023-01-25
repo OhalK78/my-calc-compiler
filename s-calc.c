@@ -50,10 +50,10 @@ expr()
 			d = (d << aexpr());
 			break;
 		case 'e':				// == operation
-			d = (d==expr());
+			d = (d == aexpr());
 			break;
 		case 'n':				// != operation
-			d = (d!=expr());
+			d = (d != aexpr());
 			break;
 		case '?':				// ternary operator 
 			if(d){
