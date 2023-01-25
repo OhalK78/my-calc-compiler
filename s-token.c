@@ -75,15 +75,24 @@ token()
         last_token = 'v';
         return last_token;
     } else if (c=='<'){    /* << or < */
+        last_token = c;
         if(c== *ptr){       // < の後に<が来る→ <<が入力されている
             last_token = 'l';
             ptr++;
         }
         return last_token;
     } else if (c=='>'){    /* >> or > */
+        last_token = c;
         if(c== *ptr){       // > の後に>が来る→ >>が入力されている
             last_token = 'r';
             ptr++;
+        }
+        return last_token;
+    } else if (c=='=') {
+        last_token = c;
+        if(c == *ptr){       // = の後に=が来る→ ==が入力されている
+            last_token = 'e';
+            ptr++; 
         }
         return last_token;
     } else {

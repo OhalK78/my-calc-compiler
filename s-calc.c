@@ -49,6 +49,9 @@ expr()
 		case 'l':				// left shift (<<)
 			d = (d << aexpr());
 			break;
+		case 'e':				// == operation
+			d = (d==expr());
+			break;
 		default:
 			error("Bad expression");
 			return d;
