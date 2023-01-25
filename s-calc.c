@@ -15,7 +15,7 @@ static int term();
 static int
 expr()
 {
-	int d, assign, t;
+	int d, assign;
 
 	d = aexpr();
 	assign = lvalue;
@@ -24,20 +24,10 @@ expr()
 		switch (last_token)
 		{
 		case '>':
-			t = aexpr();
-			if(last_token == '>'){	// >>
-				d = (d >> aexpr());
-			}else{					// >
-				d = (d > t);
-			}
+			d = (d > aexpr());
 			break;
 		case '<':
-			t = aexpr();
-			if(last_token == '<'){	// <<
-				d = (d << aexpr());
-			}else{					// <
-				d = (d < t);
-			}
+			d = (d < aexpr());
 			break;
 		case '=':
 			if (assign >= 0)
@@ -53,6 +43,12 @@ expr()
 			}
 		case ')':
 			return d;
+		case 'r':				// right shift (>>)
+			d = (d >> aexpr());
+			break;
+		case 'l':				// left shift (<<)
+			d = (d << aexpr());
+			break;
 		default:
 			error("Bad expression");
 			return d;
@@ -146,10 +142,10 @@ term()
 	case '-':
 		d = -1*term();
 		return d;
-	case '>':
-		return d;
-	case '<':
-		return d;
+	//case '>':
+	//	return d;
+	//case '<':
+	//	return d;
 	default:
 		token();
 		error("Unknown term");

@@ -74,6 +74,18 @@ token()
         value = c-'a';                /* return variable reference */
         last_token = 'v';
         return last_token;
+    } else if (c=='<'){    /* << or < */
+        if(c== *ptr){       // < の後に<が来る→ <<が入力されている
+            last_token = 'l';
+            ptr++;
+        }
+        return last_token;
+    } else if (c=='>'){    /* >> or > */
+        if(c== *ptr){       // > の後に>が来る→ >>が入力されている
+            last_token = 'r';
+            ptr++;
+        }
+        return last_token;
     } else {
         last_token = c;
         return last_token;
